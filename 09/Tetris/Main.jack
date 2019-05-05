@@ -1,0 +1,10 @@
+class Main {
+    function void main() {
+       var Game game;
+	   let game = Game.new();
+	   //do Screen.setColor(true);
+	   //do Screen.drawRectangle(0,0,10,10);
+	   do game.run();
+	   return;
+    }
+}

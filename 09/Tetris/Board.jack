@@ -1,0 +1,116 @@
+class Board{
+	field Array board;
+	field int points;
+    constructor Board new(){
+	   var int i;
+	   var int j;
+	   var Array temp;
+	   let i = 0;
+	   let j = 0;
+	   let board = Array.new(20);
+	  let points = 0;
+	   while(i < 20){
+	      let board[i] = Array.new(10);
+		 
+		  while(j < 10){
+			let temp = board[i];
+			let temp[j] = false;
+			let j = j + 1;
+		}
+	    let i = i + 1;
+		let j = 0;
+	   }
+	   return this;
+    }
+	
+	method int draw(){
+		
+	   var int i;
+	   var int j;
+	   var Array temp;
+	   let i = 0;
+	   let j = 0;
+	   do checkForWinningRow();
+	   do Screen.clearScreen();
+	   while(i < 20){
+		   //do Output.printInt(i);
+		   //do Output.printString(" ");
+		   while(j < 10){
+			let temp = board[i];
+			//do Output.printInt(temp[j]);
+			//do Output.printString(" ");
+			if(temp[j] = true){
+				do Screen.setColor(true);
+				do Screen.drawRectangle(j*10,i*10,j*10 + 10,i*10 + 10);
+			}
+			let j = j + 1;
+		}
+		//do Output.println();
+	    let i = i + 1;
+		let j = 0;
+	   }
+		return points;
+	}
+	
+	method void checkForWinningRow(){
+	   var int i;
+	   var int j;
+	   var int jj;
+	   var int sum;
+	   var Array temp;
+	   var Array temp2;
+	   let i = 0;
+	   let j = 0;
+	   
+	    while(i < 20){
+		   let sum = 0;
+		   while(j < 10){
+			let temp = board[i];
+			if(temp[j] = true){
+				let sum = sum + 1;
+			}
+			let j = j + 1;
+		}
+		
+		if(sum = 10){
+			let j = 0;
+			let points = points + 1;
+			while(j < 10){
+				let temp[j] = false;	
+				let sum = i - 1;
+				while(sum > -1){
+					if((sum + 1) < 20){ 
+						let temp = board[sum];
+						let temp2 = board[sum + 1];
+						let jj = 0;
+						while(jj < 10){
+							let temp2[j] = temp[j];
+							let jj = jj + 1;
+						}
+					}
+					let sum = sum - 1;
+					}
+					let j = j + 1;
+				}
+				
+				let i = i - 1;
+			}
+		
+	    let i = i + 1;
+		let j = 0;
+	   }
+	   
+	   return;
+	}
+	
+	method void set(int yy, int xx, boolean value){
+		var Array temp;
+		let temp = board[yy];
+		let temp[xx] = value;
+		return;
+	}
+	
+	method Array get(){
+		return board;
+	}
+}

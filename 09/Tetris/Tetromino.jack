@@ -1,0 +1,163 @@
+class Tetromino {
+   field int size;
+   field Array shapes;
+   field int index;
+   field int x;
+   field int y;
+   field Board board;
+   constructor Tetromino new(Array shapesArg, Board boardArg){
+	   let shapes = shapesArg;
+	   let size = 10;
+	   let index = 0;
+	   let x = 0;
+	   let y = 0;
+	   let board = boardArg;
+	   return this;
+   }
+   
+   method void draw(){
+		var int shape;
+		var int i;
+		var int j;
+		var int n;
+		let shape = shapes[index];
+		let i = 0;
+		let j = 0;
+		while(i < 4){
+			while(j < 4){
+				let n = pow(2, 15 - (j + (i*4)));
+				if(shape & n){
+					do Screen.setColor(true);
+					
+					do Screen.drawRectangle((x*size) + (size*j), (y*size) + (size*i),(x*size) + (size*j) + size, (y*size) + (size*i) + size);
+					
+				} 
+				let j = j + 1;
+			}
+			let i = i + 1;
+			let j = 0;
+		}
+		return;
+	}
+	
+	method boolean drop(){
+		var int shape;
+		var int i;
+		var int j;
+		var int n;
+		var Array temp;
+		var Array board_array;
+		var boolean colide;
+		
+		let colide = false;
+		let shape = shapes[index];
+		let i = 0;
+		let j = 0;
+		let y = y + 1;
+			while(i < 4){
+				while(j < 4){
+					let n = pow(2, 15 - (j + (i*4)));
+					if(shape & n){
+						let board_array = board.get();
+						if(((y+i) > -1) & ((y+i) < 20) & ((x+j) > -1) & ((x+j) < 10)){
+							let temp = board_array[y+i];
+							if(temp[x+j] = true){
+								let colide = true;
+								let j = 4;
+								let i = 4;
+							}
+						}
+					} 
+					let j = j + 1;
+			}
+			let i = i + 1;
+			let j = 0;
+		}
+		
+		let i = 0;
+		let j = 0;
+		if((y = 17) | colide){
+			let y = y - 1;
+			while(i < 4){
+				while(j < 4){
+					let n = pow(2, 15 - (j + (i*4)));
+					if(shape & n){
+						do board.set(y+i,x+j,true);
+					} 
+					let j = j + 1;
+			}
+			let i = i + 1;
+			let j = 0;
+		}
+			return true;
+		}
+		return false;
+	}
+	
+	method void rotate(int dir){
+		let index = index + dir;
+		if(index = -1){
+			let index = 3;
+		}
+		if(index = 4){
+			let index = 0;
+		}
+		return;
+	}
+	
+	method void move(int dir){
+		var int shape;
+		var int i;
+		var int j;
+		var int n;
+		var Array board_array;
+		var Array temp;
+		let x = x + dir;
+		let shape = shapes[index];
+		let i = 0;
+		let j = 0;
+		while(i < 4){
+			while(j < 4){
+				let n = pow(2, 15 - (j + (i*4)));
+				if(shape & n){
+					if((x + j) < 0){
+						let x = x + 1;
+						return;
+					}
+					if((x + j) > 9){
+						let x =  x - 1;
+						return;
+					}
+					let board_array = board.get();
+					let temp = board_array[y+i];
+					if(temp[x+j] = true){
+						let x = x - dir;
+						return;
+					}
+					
+				} 
+				let j = j + 1;
+			}
+			let i = i + 1;
+			let j = 0;
+		}
+		return;
+	}
+	method int pow(int n, int power){
+		var int result;
+		var int i;
+		let i = 0;
+		let result = 1;
+		
+		if(power > 14){
+			return 0;
+		}
+		
+		while(i < power){
+			let result = result * n;
+			let i = i + 1;
+		}
+		return result;
+	}
+}
+

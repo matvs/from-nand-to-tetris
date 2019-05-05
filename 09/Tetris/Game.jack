@@ -1,0 +1,129 @@
+class Game {
+	field Array Tetrominos;
+	constructor Game new(){
+		var Array O;
+		var Array I;
+		var Array L;
+		var Array J;
+		var Array T;
+		var Array Z;
+		var Array S;
+		
+		let O = Array.new(4);
+		let I = Array.new(4);
+		let L = Array.new(4);
+		let J = Array.new(4);
+		let T = Array.new(4);
+		let Z = Array.new(4);
+		let S = Array.new(4);
+		
+		let O[0] = 102;
+		let O[1] = 102;
+		let O[2] = 102;
+		let O[3] = 102;
+		
+		//34952;
+		let I[0] = 4369;
+		let I[1] = 15;
+		let I[2] = 4369;
+		let I[3] = 15;
+		
+		let L[0] = 2188;
+		let L[1] = 232;
+		let L[2] = 1570;
+		let L[3] = 46;
+		
+		let J[0] = 275;
+		let J[1] = 71;
+		let J[2] = 1604;
+		let J[3] = 226;
+		
+		let T[0] = 78;
+		let T[1] = 2248;
+		let T[2] = 228;
+		let T[3] = 1220;
+		
+		let Z[0] = 1224;
+		let Z[1] = 198;
+		let Z[2] = 1224;
+		let Z[3] = 198;
+		
+		let S[0] = 2244;
+		let S[1] = 108;
+		let S[2] = 2244;
+		let S[3] = 108;
+		
+		let Tetrominos = Array.new(7);
+		
+		let Tetrominos[0] = O;
+		let Tetrominos[1] = I;
+		let Tetrominos[2] = L;
+		let Tetrominos[3] = J;
+		let Tetrominos[4] = T;
+		let Tetrominos[5] = Z;
+		let Tetrominos[6] = S;
+		
+		return this;
+	}
+	
+	method void run(){
+		var Array next;
+		var int next_index;
+		var boolean gameOver;
+		var boolean next_tetro;
+		var Tetromino tetromino;
+		var Board board;
+		var int key;
+		var String tetrominos_sequance;
+		var int i;
+		var int points;
+		
+		let next = Array.new(69);
+		let tetrominos_sequance = "264023413106552306544025215216302600425302406531023415653201365146146";
+		let i = 0;
+		while(i < 69){
+			let next[i] = tetrominos_sequance.charAt(i);
+			let next[i] = next[i] - 48;
+			let i = i + 1;
+		}
+		
+		let next_index = 0;
+		let gameOver = false;
+		let board = Board.new();
+		let tetromino = Tetromino.new(Tetrominos[next[next_index]], board);
+		while(~(gameOver)){
+			
+			let key = Keyboard.keyPressed();
+			
+			if(key = 132){
+				do tetromino.move(1);
+			} 
+			if(key = 130){
+				do tetromino.move(-1);
+			}
+			if(key = 131){
+				do tetromino.rotate(1);
+			} 
+			if(key = 133){
+				do tetromino.rotate(-1);
+			}
+			
+			let points = board.draw();
+			do Output.moveCursor(0,15);
+			do Output.printString("You have got ");
+			do Output.printInt(points);
+			do Output.printString(" points ");
+			
+			do tetromino.draw();
+			let next_tetro = tetromino.drop();
+			if(next_tetro){
+				let next_index = next_index + 1;
+				let tetromino = Tetromino.new(Tetrominos[next[next_index]], board);
+			}
+			do Sys.wait(3000);
+			
+		}
+		
+		return;
+	}
+}
